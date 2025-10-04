@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: cookbook
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cookbook
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
