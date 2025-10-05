@@ -1,9 +1,10 @@
 spring:
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: validate
   datasource:
     url: jdbc:tc:postgresql:15-alpine:///cookbook
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-  jpa:
-    hibernate:
-      ddl-auto: validate
   flyway:
     enabled: true

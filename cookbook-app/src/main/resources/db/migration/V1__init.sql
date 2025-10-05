@@ -1,1 +1,0 @@
--- Initial empty migration to verify Flyway setup
