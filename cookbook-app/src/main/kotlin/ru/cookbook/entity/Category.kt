@@ -15,10 +15,10 @@ open class Category(
     @Id
     open val id: UUID = UUID.randomUUID(),
     
-    open val name: String,
+    open var name: String,
     
     @Column(columnDefinition = "TEXT")
-    open val description: String?,
+    open var description: String?,
     
     
     open val createdAt: OffsetDateTime = OffsetDateTime.now(),
