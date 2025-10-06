@@ -45,7 +45,7 @@ class RecipeServiceTest(
         every { recipeRepository.save(capture(recipeSlot)) } returns savedRecipe
 
         // when
-        val result = recipeService.create(dishId, request)
+        recipeService.create(dishId, request)
 
         // then
         verify { recipeRepository.save(any()) }

@@ -36,7 +36,7 @@ class DishServiceTest(
         every { dishRepository.save(capture(dishSlot)) } returns savedDish
 
         // when
-        val result = dishService.create(request)
+        dishService.create(request)
 
         // then
         verify { dishRepository.save(any()) }
