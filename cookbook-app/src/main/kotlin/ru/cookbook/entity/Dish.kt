@@ -18,10 +18,10 @@ open class Dish(
     @Id
     open val id: UUID = UUID.randomUUID(),
     
-    open val name: String,
+    open var name: String,
     
     @Column(columnDefinition = "TEXT")
-    open val description: String,
+    open var description: String,
     
     
     @OneToOne(cascade = [CascadeType.ALL])
