@@ -22,13 +22,13 @@ open class Recipe(
     @JoinColumn(name = "dish_id")
     open val dish: Dish,
     
-    open val name: String,
+    open var name: String,
     
     @Column(columnDefinition = "TEXT")
-    open val description: String,
+    open var description: String,
     
-    open val cookingTime: Duration,
-    open val servings: Int,
+    open var cookingTime: Duration,
+    open var servings: Int,
     
     open val createdAt: OffsetDateTime = OffsetDateTime.now(),
     open var updatedAt: OffsetDateTime = OffsetDateTime.now()
