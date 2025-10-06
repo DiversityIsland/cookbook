@@ -1,10 +1,13 @@
 package ru.cookbook.util
 
+import ru.cookbook.dto.category.CreateCategoryRequest
+import ru.cookbook.dto.category.UpdateCategoryRequest
 import ru.cookbook.dto.dish.CreateDishRequest
 import ru.cookbook.dto.dish.DishCardDto
 import ru.cookbook.dto.recipe.CreateRecipeRequest
 import ru.cookbook.dto.recipe.RecipeCardDto
 import ru.cookbook.dto.recipe.UpdateRecipeRequest
+import ru.cookbook.entity.Category
 import ru.cookbook.entity.Dish
 import ru.cookbook.entity.Image
 import ru.cookbook.entity.Recipe
@@ -96,6 +99,36 @@ fun recipe(
     description = description,
     cookingTime = cookingTime,
     servings = servings,
+    createdAt = createdAt,
+    updatedAt = updatedAt
+)
+
+fun createCategoryRequest(
+    name: String = "Test Category",
+    description: String? = "Test Category Description"
+) = CreateCategoryRequest(
+    name = name,
+    description = description
+)
+
+fun updateCategoryRequest(
+    name: String = "Updated Category",
+    description: String? = "Updated Category Description"
+) = UpdateCategoryRequest(
+    name = name,
+    description = description
+)
+
+fun category(
+    id: UUID = UUID.randomUUID(),
+    name: String = "Test Category",
+    description: String? = "Test Category Description",
+    createdAt: OffsetDateTime = OffsetDateTime.now(),
+    updatedAt: OffsetDateTime = OffsetDateTime.now()
+) = Category(
+    id = id,
+    name = name,
+    description = description,
     createdAt = createdAt,
     updatedAt = updatedAt
 )
