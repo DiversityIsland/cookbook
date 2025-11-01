@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга Рецептов</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📖 Книга Рецептов</h1>
+            <nav>
+                <a href="/">Блюда</a>
+                <a href="/categories.html">Категории</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h2>Все блюда</h2>
+            <button class="btn btn-primary" onclick="showCreateDishModal()">+ Добавить блюдо</button>
+        </div>
+
+        <div id="dishes-grid" class="dishes-grid">
+            <div class="loading">Загрузка...</div>
+        </div>
+    </main>
+
+    <!-- Модальное окно создания блюда -->
+    <div id="createDishModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать новое блюдо</h3>
+                <span class="close" onclick="closeCreateDishModal()">&times;</span>
+            </div>
+            <form id="createDishForm" onsubmit="handleCreateDish(event)">
+                <div class="form-group">
+                    <label for="dishName">Название блюда *</label>
+                    <input type="text" id="dishName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dishDescription">Описание *</label>
+                    <textarea id="dishDescription" name="description" rows="4" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateDishModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

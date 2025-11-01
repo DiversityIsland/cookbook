@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блюдо - Книга Рецептов</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📖 Книга Рецептов</h1>
+            <nav>
+                <a href="/">Блюда</a>
+                <a href="/categories.html">Категории</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="dish-details">
+            <div class="loading">Загрузка...</div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Рецепты</h3>
+                <button class="btn btn-primary" onclick="showCreateRecipeModal()">+ Добавить рецепт</button>
+            </div>
+            <div id="recipes-list" class="recipes-list">
+                <p class="empty-state">Рецептов пока нет</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно создания рецепта -->
+    <div id="createRecipeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Создать новый рецепт</h3>
+                <span class="close" onclick="closeCreateRecipeModal()">&times;</span>
+            </div>
+            <form id="createRecipeForm" onsubmit="handleCreateRecipe(event)">
+                <div class="form-group">
+                    <label for="recipeName">Название рецепта *</label>
+                    <input type="text" id="recipeName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipeDescription">Описание *</label>
+                    <textarea id="recipeDescription" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cookingTime">Время приготовления (минуты) *</label>
+                        <input type="number" id="cookingTime" name="cookingTime" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servings">Количество порций *</label>
+                        <input type="number" id="servings" name="servings" min="1" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateRecipeModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/dish.js"></script>
+</body>
+</html>

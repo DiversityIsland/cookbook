@@ -8,6 +8,7 @@ plugins {
 dependencies {
     implementation(project(":cookbook-api"))
     implementation(project(":cookbook-domain"))
+    implementation(project(":cookbook-ui"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
