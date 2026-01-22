@@ -67,6 +67,26 @@
         </div>
     </div>
 
+    <!-- Модальное окно загрузки изображения -->
+    <div id="uploadImageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Загрузить фото блюда</h3>
+                <span class="close" onclick="closeUploadImageModal()">&times;</span>
+            </div>
+            <form id="uploadImageForm" onsubmit="handleUploadImage(event)">
+                <div class="form-group">
+                    <label for="imageFile">Выберите изображение *</label>
+                    <input type="file" id="imageFile" name="file" accept="image/*" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeUploadImageModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="/js/dish.js"></script>
 </body>
 </html>

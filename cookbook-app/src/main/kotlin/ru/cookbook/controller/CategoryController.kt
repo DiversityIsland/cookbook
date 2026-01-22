@@ -12,6 +12,7 @@ import ru.cookbook.dto.category.CategoryCardDto
 import ru.cookbook.dto.category.CategoryGridDto
 import ru.cookbook.dto.category.CreateCategoryRequest
 import ru.cookbook.dto.category.UpdateCategoryRequest
+import ru.cookbook.dto.dish.DishGridDto
 import ru.cookbook.service.CategoryService
 import java.util.UUID
 
@@ -41,4 +42,14 @@ class CategoryController(
     @GetMapping
     fun getAll(): List<CategoryGridDto> =
         categoryService.getAll()
+
+    @GetMapping("/{id}/dishes")
+    fun getDishes(@PathVariable id: UUID): List<DishGridDto> =
+        categoryService.getDishes(id)
+
+    @PostMapping("/{id}/dishes/{dishId}")
+    fun addDish(
+        @PathVariable id: UUID,
+        @PathVariable dishId: UUID
+    ) = categoryService.addDish(id, dishId)
 }

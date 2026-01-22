@@ -29,16 +29,20 @@ function displayDishes(dishes) {
         return;
     }
     
-    container.innerHTML = dishes.map(dish => `
-        <div class="dish-card" onclick="openDish('${dish.id}')">
-            <div class="dish-card-image">
-                🍽️
+    container.innerHTML = dishes.map(dish => {
+        const imageHtml = dish.imageId 
+            ? `<img src="${API_BASE_URL}/images/${dish.imageId}/data" alt="${escapeHtml(dish.name)}" class="dish-card-img">`
+            : `<div class="dish-card-placeholder">🍽️</div>`;
+        
+        return `
+            <div class="dish-card" onclick="openDish('${dish.id}')">
+                ${imageHtml}
+                <div class="dish-card-content">
+                    <h3>${escapeHtml(dish.name)}</h3>
+                </div>
             </div>
-            <div class="dish-card-content">
-                <h3>${escapeHtml(dish.name)}</h3>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Открыть страницу блюда

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import ru.cookbook.dto.recipe.CreateCookingStepRequest
 import ru.cookbook.dto.recipe.CreateRecipeRequest
 import ru.cookbook.dto.recipe.RecipeCardDto
+import ru.cookbook.dto.recipe.RecipeFullDto
 import ru.cookbook.dto.recipe.RecipeGridDto
 import ru.cookbook.dto.recipe.UpdateRecipeRequest
 import ru.cookbook.service.RecipeService
@@ -47,4 +49,14 @@ class RecipeController(
     @GetMapping("/dish/{dishId}")
     fun getByDishId(@PathVariable dishId: UUID): List<RecipeGridDto> =
         recipeService.getByDishId(dishId)
+
+    @GetMapping("/{id}/full")
+    fun getFullById(@PathVariable id: UUID): RecipeFullDto =
+        recipeService.getFullById(id)
+
+    @PostMapping("/{id}/steps")
+    fun createStep(
+        @PathVariable id: UUID,
+        @RequestBody request: CreateCookingStepRequest
+    ): UUID = recipeService.createStep(id, request)
 }

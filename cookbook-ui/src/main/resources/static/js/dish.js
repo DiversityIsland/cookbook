@@ -39,11 +39,25 @@ async function loadDishDetails() {
 function displayDishDetails(dish) {
     const container = document.getElementById('dish-details');
     
+    const imageHtml = dish.imageId 
+        ? `<img src="${API_BASE_URL}/images/${dish.imageId}/data" alt="${escapeHtml(dish.name)}" class="dish-image-img">`
+        : `<div class="dish-image-placeholder">🍽️</div>`;
+    
+    const imageButtonsHtml = dish.imageId
+        ? `
+            <button class="btn btn-secondary btn-small" onclick="showUploadImageModal()">Заменить фото</button>
+            <button class="btn btn-danger btn-small" onclick="removeImage()">Удалить фото</button>
+          `
+        : `<button class="btn btn-primary btn-small" onclick="showUploadImageModal()">Добавить фото</button>`;
+    
     container.innerHTML = `
         <div class="dish-header">
             <div class="dish-header-content">
-                <div class="dish-image">
-                    🍽️
+                <div class="dish-image-container">
+                    ${imageHtml}
+                    <div class="dish-image-actions">
+                        ${imageButtonsHtml}
+                    </div>
                 </div>
                 <div class="dish-info">
                     <h2>${escapeHtml(dish.name)}</h2>
@@ -86,7 +100,7 @@ function displayRecipes(recipes) {
     }
     
     container.innerHTML = recipes.map(recipe => `
-        <div class="recipe-card">
+        <div class="recipe-card" onclick="openRecipe('${recipe.id}')">
             <h4>${escapeHtml(recipe.name)}</h4>
             <div class="recipe-meta">
                 <span>⏱️ ${formatDuration(recipe.cookingTime)}</span>
@@ -96,6 +110,11 @@ function displayRecipes(recipes) {
             </div>
         </div>
     `).join('');
+}
+
+// Открыть страницу рецепта
+function openRecipe(id) {
+    window.location.href = `/recipe.html?id=${id}`;
 }
 
 // Показать модальное окно создания рецепта
@@ -177,16 +196,14 @@ function formatDate(dateString) {
 }
 
 // Форматирование длительности
-function formatDuration(duration) {
-    // Duration в формате ISO 8601 (например, "PT45M")
-    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return duration;
-    
-    const hours = match[1] ? parseInt(match[1]) : 0;
-    const minutes = match[2] ? parseInt(match[2]) : 0;
+function formatDuration(durationSeconds) {
+    // Duration приходит как число секунд (например, 5400.000000000)
+    const totalMinutes = Math.floor(durationSeconds / 60);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
     
     if (hours > 0) {
-        return `${hours} ч ${minutes} мин`;
+        return minutes > 0 ? `${hours} ч ${minutes} мин` : `${hours} ч`;
     }
     return `${minutes} мин`;
 }
@@ -198,10 +215,100 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Показать модальное окно загрузки изображения
+function showUploadImageModal() {
+    document.getElementById('uploadImageModal').classList.add('show');
+}
+
+// Закрыть модальное окно загрузки изображения
+function closeUploadImageModal() {
+    document.getElementById('uploadImageModal').classList.remove('show');
+    document.getElementById('uploadImageForm').reset();
+}
+
+// Обработка загрузки изображения
+async function handleUploadImage(event) {
+    event.preventDefault();
+    
+    const fileInput = document.getElementById('imageFile');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('Пожалуйста, выберите файл');
+        return;
+    }
+    
+    // Проверка типа файла
+    if (!file.type.startsWith('image/')) {
+        alert('Пожалуйста, выберите изображение');
+        return;
+    }
+    
+    try {
+        // Загрузить изображение
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        const uploadResponse = await fetch(`${API_BASE_URL}/images`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+            throw new Error(`Ошибка загрузки изображения: ${uploadResponse.status}`);
+        }
+        
+        const imageId = (await uploadResponse.text()).trim().replace(/^"|"$/g, '');
+        
+        // Установить изображение для блюда
+        const setImageResponse = await fetch(`${API_BASE_URL}/dishes/${currentDishId}/image/${imageId}`, {
+            method: 'PUT'
+        });
+        
+        if (!setImageResponse.ok) {
+            throw new Error(`Ошибка установки изображения: ${setImageResponse.status}`);
+        }
+        
+        closeUploadImageModal();
+        
+        // Перезагрузить детали блюда
+        await loadDishDetails();
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Не удалось загрузить изображение. Попробуйте еще раз.');
+    }
+}
+
+// Удаление изображения
+async function removeImage() {
+    if (!confirm('Вы уверены, что хотите удалить фото?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/dishes/${currentDishId}/image`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) throw new Error('Ошибка удаления изображения');
+        
+        // Перезагрузить детали блюда
+        await loadDishDetails();
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Не удалось удалить изображение. Попробуйте еще раз.');
+    }
+}
+
 // Закрытие модального окна при клике вне его
 window.onclick = function(event) {
-    const modal = document.getElementById('createRecipeModal');
-    if (event.target === modal) {
+    const createRecipeModal = document.getElementById('createRecipeModal');
+    const uploadImageModal = document.getElementById('uploadImageModal');
+    
+    if (event.target === createRecipeModal) {
         closeCreateRecipeModal();
+    }
+    if (event.target === uploadImageModal) {
+        closeUploadImageModal();
     }
 }

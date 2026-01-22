@@ -41,4 +41,14 @@ class DishController(
     @GetMapping
     fun getAll(): List<DishGridDto> =
         dishService.getAll()
+    
+    @PutMapping("/{id}/image/{imageId}")
+    fun setImage(
+        @PathVariable id: UUID,
+        @PathVariable imageId: UUID
+    ): DishCardDto = dishService.setImage(id, imageId)
+    
+    @DeleteMapping("/{id}/image")
+    fun removeImage(@PathVariable id: UUID): DishCardDto =
+        dishService.removeImage(id)
 }

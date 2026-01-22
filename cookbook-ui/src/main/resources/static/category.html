@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Категория - Книга Рецептов</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📖 Книга Рецептов</h1>
+            <nav>
+                <a href="/">Блюда</a>
+                <a href="/categories.html">Категории</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="category-details">
+            <div class="loading">Загрузка...</div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Блюда в категории</h3>
+                <button class="btn btn-primary" onclick="showAddDishModal()">+ Добавить блюдо</button>
+            </div>
+            <div id="dishes-grid" class="dishes-grid">
+                <div class="loading">Загрузка...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно добавления блюда -->
+    <div id="addDishModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Добавить блюдо в категорию</h3>
+                <span class="close" onclick="closeAddDishModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="available-dishes" class="available-dishes-list">
+                    <div class="loading">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/category.js"></script>
+</body>
+</html>

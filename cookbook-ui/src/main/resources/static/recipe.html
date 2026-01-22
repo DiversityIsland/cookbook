@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рецепт - Книга Рецептов</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📖 Книга Рецептов</h1>
+            <nav>
+                <a href="/">Блюда</a>
+                <a href="/categories.html">Категории</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="recipe-details">
+            <div class="loading">Загрузка...</div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Ингредиенты</h3>
+                <button class="btn btn-secondary btn-small" onclick="showManageIngredientsModal()">Изменить</button>
+            </div>
+            <div id="ingredients-list" class="ingredients-list">
+                <div class="loading">Загрузка...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Шаги приготовления</h3>
+                <button class="btn btn-primary" onclick="showCreateStepModal()">+ Добавить шаг</button>
+            </div>
+            <div id="steps-list" class="steps-list">
+                <div class="loading">Загрузка...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно управления ингредиентами -->
+    <div id="manageIngredientsModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Управление ингредиентами</h3>
+                <button class="btn btn-primary btn-small" onclick="showAddIngredientModal()">Добавить</button>
+                <span class="close" onclick="closeManageIngredientsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="ingredients-manage-list" class="ingredients-manage-list">
+                    <div class="loading">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления ингредиента -->
+    <div id="addIngredientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Добавить ингредиент</h3>
+                <span class="close" onclick="closeAddIngredientModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addIngredientForm" onsubmit="handleAddIngredient(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ingredientName">Название *</label>
+                            <input type="text" id="ingredientName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientAmount">Количество *</label>
+                            <input type="number" id="ingredientAmount" name="amount" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredientUnit">Единица измерения *</label>
+                        <select id="ingredientUnit" name="unit" required>
+                            <option value="GRAM">Грамм</option>
+                            <option value="KILOGRAM">Килограмм</option>
+                            <option value="MILLILITER">Миллилитр</option>
+                            <option value="LITER">Литр</option>
+                            <option value="PIECE">Штук</option>
+                            <option value="TABLESPOON">Столовая ложка</option>
+                            <option value="TEASPOON">Чайная ложка</option>
+                            <option value="CUP">Стакан</option>
+                            <option value="PINCH">Щепотка</option>
+                            <option value="TO_TASTE">По вкусу</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="ingredientOptional" name="isOptional">
+                            Опционально
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeAddIngredientModal()">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания шага -->
+    <div id="createStepModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Добавить шаг приготовления</h3>
+                <span class="close" onclick="closeCreateStepModal()">&times;</span>
+            </div>
+            <form id="createStepForm" onsubmit="handleCreateStep(event)">
+                <div class="form-group">
+                    <label for="stepNumber">Номер шага *</label>
+                    <input type="number" id="stepNumber" name="stepNumber" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="stepDescription">Описание *</label>
+                    <textarea id="stepDescription" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="estimatedTime">Время выполнения (минуты)</label>
+                    <input type="number" id="estimatedTime" name="estimatedTime" min="0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateStepModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/recipe.js"></script>
+</body>
+</html>
