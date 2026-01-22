@@ -30,11 +30,16 @@ function displayCategories(categories) {
     }
     
     container.innerHTML = categories.map(category => `
-        <div class="category-card">
+        <div class="category-card" onclick="openCategory('${category.id}')">
             <h3>${escapeHtml(category.name)}</h3>
             ${category.description ? `<p>${escapeHtml(category.description)}</p>` : ''}
         </div>
     `).join('');
+}
+
+// Открыть страницу категории
+function openCategory(id) {
+    window.location.href = `/category.html?id=${id}`;
 }
 
 // Показать модальное окно создания категории

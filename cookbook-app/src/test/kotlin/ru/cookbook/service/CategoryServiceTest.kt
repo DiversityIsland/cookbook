@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import io.mockk.junit5.MockKExtension
 import ru.cookbook.entity.Category
+import ru.cookbook.repository.CategoryDishRepository
 import ru.cookbook.repository.CategoryRepository
+import ru.cookbook.repository.DishRepository
 import ru.cookbook.util.category
 import ru.cookbook.util.createCategoryRequest
 import ru.cookbook.util.updateCategoryRequest
@@ -19,9 +21,11 @@ import java.util.UUID
 
 @ExtendWith(MockKExtension::class)
 class CategoryServiceTest(
-    @MockK private val categoryRepository: CategoryRepository
+    @MockK private val categoryRepository: CategoryRepository,
+    @MockK private val dishRepository: DishRepository,
+    @MockK private val categoryDishRepository: CategoryDishRepository
 ) {
-    private val categoryService = CategoryService(categoryRepository)
+    private val categoryService = CategoryService(categoryRepository, dishRepository, categoryDishRepository)
 
     @Test
     fun `should create category`() {

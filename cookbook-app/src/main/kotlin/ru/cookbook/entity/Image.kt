@@ -3,8 +3,9 @@ package ru.cookbook.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
-import jakarta.persistence.Lob
 import org.hibernate.Hibernate
+import org.hibernate.annotations.JdbcTypeCode
+import java.sql.Types
 import java.time.OffsetDateTime
 import java.util.UUID
 
@@ -13,7 +14,7 @@ open class Image(
     @Id
     open val id: UUID = UUID.randomUUID(),
     
-    @Lob
+    @JdbcTypeCode(Types.BINARY)
     @Column(columnDefinition = "bytea")
     open val data: ByteArray,
     

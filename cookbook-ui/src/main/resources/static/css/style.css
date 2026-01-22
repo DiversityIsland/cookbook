@@ -130,7 +130,13 @@ nav a:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.dish-card-image {
+.dish-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.dish-card-placeholder {
     width: 100%;
     height: 200px;
     background-color: #ecf0f1;
@@ -174,8 +180,21 @@ nav a:hover {
     gap: 30px;
 }
 
-.dish-image {
+.dish-image-container {
     width: 300px;
+    flex-shrink: 0;
+}
+
+.dish-image-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dish-image-placeholder {
+    width: 100%;
     height: 300px;
     background-color: #ecf0f1;
     border-radius: 8px;
@@ -183,7 +202,13 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     font-size: 96px;
-    flex-shrink: 0;
+}
+
+.dish-image-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .dish-info {
@@ -340,17 +365,27 @@ nav a:hover {
     overflow-y: auto;
 }
 
+.modal-content.modal-large {
+    max-width: 800px;
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid #ecf0f1;
+    gap: 15px;
 }
 
 .modal-header h3 {
     font-size: 22px;
     color: #2c3e50;
+    flex: 1;
+}
+
+.modal-header .btn {
+    margin-left: auto;
 }
 
 .close {
@@ -392,6 +427,24 @@ nav a:hover {
 
 .form-group textarea {
     resize: vertical;
+}
+
+.form-group.checkbox-group {
+    margin-top: 10px;
+}
+
+.form-group.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.form-group.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
 }
 
 .form-row {
@@ -443,18 +496,203 @@ nav a:hover {
     border: 1px solid #f5c6cb;
 }
 
+/* Ingredients List */
+.ingredients-list {
+    padding: 0;
+}
+
+.ingredients {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.ingredient-item:last-child {
+    border-bottom: none;
+}
+
+.ingredient-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.ingredient-amount {
+    color: #7f8c8d;
+    margin-left: 10px;
+}
+
+.ingredient-optional {
+    color: #95a5a6;
+    font-size: 12px;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+/* Steps List */
+.steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-card {
+    display: flex;
+    gap: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content p {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+.step-time {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* Ingredients Management */
+.ingredients-manage-list {
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.manage-ingredient-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.manage-ingredient-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.manage-ingredient-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.manage-ingredient-amount {
+    color: #7f8c8d;
+}
+
+
+/* Available Dishes List */
+.available-dishes-list {
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.available-dish-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.available-dish-item:hover {
+    background: #e9ecef;
+}
+
+.available-dish-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ecf0f1;
+    border-radius: 8px;
+}
+
+.available-dish-icon-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.available-dish-name {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .dish-header-content {
         flex-direction: column;
     }
     
-    .dish-image {
+    .dish-image-container {
+        width: 100%;
+    }
+    
+    .dish-image-img,
+    .dish-image-placeholder {
         width: 100%;
         height: 250px;
     }
     
     .form-row {
         grid-template-columns: 1fr;
+    }
+    
+    .step-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 12px;
     }
 }

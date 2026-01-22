@@ -55,4 +55,18 @@ class DishService(
 
     fun getAll(): List<DishGridDto> =
         dishRepository.findAll().map { it.toGridDto() }
+    
+    fun setImage(id: UUID, imageId: UUID): DishCardDto {
+        val dish = dishRepository.findByIdOrThrow(id)
+        val image = imageRepository.findByIdOrThrow(imageId)
+        
+        dish.image = image
+        return dishRepository.save(dish).toCardDto()
+    }
+    
+    fun removeImage(id: UUID): DishCardDto {
+        val dish = dishRepository.findByIdOrThrow(id)
+        dish.image = null
+        return dishRepository.save(dish).toCardDto()
+    }
 }

@@ -1,16 +1,20 @@
 package ru.cookbook.service
 
 import org.springframework.stereotype.Service
+import ru.cookbook.dto.recipe.CreateCookingStepRequest
 import ru.cookbook.dto.recipe.CreateRecipeRequest
 import ru.cookbook.dto.recipe.RecipeCardDto
+import ru.cookbook.dto.recipe.RecipeFullDto
 import ru.cookbook.dto.recipe.RecipeGridDto
 import ru.cookbook.dto.recipe.UpdateRecipeRequest
 import ru.cookbook.entity.Dish
 import ru.cookbook.entity.Recipe
 import ru.cookbook.mapper.toCardDto
 import ru.cookbook.mapper.toEntity
+import ru.cookbook.mapper.toFullDto
 import ru.cookbook.mapper.toGridDto
 import ru.cookbook.mapper.update
+import ru.cookbook.repository.CookingStepRepository
 import ru.cookbook.repository.DishRepository
 import ru.cookbook.repository.RecipeRepository
 import ru.cookbook.util.findByIdOrThrow
@@ -19,7 +23,8 @@ import java.util.UUID
 @Service
 class RecipeService(
     private val recipeRepository: RecipeRepository,
-    private val dishRepository: DishRepository
+    private val dishRepository: DishRepository,
+    private val cookingStepRepository: CookingStepRepository
 ) {
     fun create(dishId: UUID, request: CreateRecipeRequest): UUID {
         val dish = dishRepository.findByIdOrThrow(dishId)
@@ -45,4 +50,13 @@ class RecipeService(
 
     fun getByDishId(dishId: UUID): List<RecipeGridDto> =
         recipeRepository.findByDishId(dishId).map { it.toGridDto() }
+
+    fun getFullById(id: UUID): RecipeFullDto =
+        recipeRepository.findByIdOrThrow(id).toFullDto()
+
+    fun createStep(recipeId: UUID, request: CreateCookingStepRequest): UUID {
+        val recipe = recipeRepository.findByIdOrThrow(recipeId)
+        val step = request.toEntity(recipe)
+        return cookingStepRepository.save(step).id
+    }
 }

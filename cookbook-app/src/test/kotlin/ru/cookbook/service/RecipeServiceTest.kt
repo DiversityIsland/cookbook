@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import ru.cookbook.entity.Recipe
+import ru.cookbook.repository.CookingStepRepository
 import ru.cookbook.repository.DishRepository
 import ru.cookbook.repository.RecipeRepository
 import ru.cookbook.util.createRecipeRequest
@@ -22,9 +23,10 @@ import ru.cookbook.util.updateRecipeRequest
 @ExtendWith(MockKExtension::class)
 class RecipeServiceTest(
     @MockK private val recipeRepository: RecipeRepository,
-    @MockK private val dishRepository: DishRepository
+    @MockK private val dishRepository: DishRepository,
+    @MockK private val cookingStepRepository: CookingStepRepository
 ) {
-    private val recipeService = RecipeService(recipeRepository, dishRepository)
+    private val recipeService = RecipeService(recipeRepository, dishRepository, cookingStepRepository)
 
     @Test
     fun `should create recipe`() {
