@@ -133,13 +133,36 @@ async function handleCreateRecipe(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const name = formData.get('name').trim();
+    const description = formData.get('description').trim();
     const cookingTimeMinutes = parseInt(formData.get('cookingTime'));
+    const servings = parseInt(formData.get('servings'));
+    
+    if (!name) {
+        alert('Название рецепта не может быть пустым');
+        return;
+    }
+    
+    if (!description) {
+        alert('Описание не может быть пустым');
+        return;
+    }
+    
+    if (!cookingTimeMinutes || cookingTimeMinutes <= 0) {
+        alert('Время приготовления должно быть больше 0');
+        return;
+    }
+    
+    if (!servings || servings <= 0) {
+        alert('Количество порций должно быть больше 0');
+        return;
+    }
     
     const data = {
-        name: formData.get('name'),
-        description: formData.get('description'),
+        name: name,
+        description: description,
         cookingTime: `PT${cookingTimeMinutes}M`, // ISO 8601 Duration format
-        servings: parseInt(formData.get('servings'))
+        servings: servings
     };
     
     try {

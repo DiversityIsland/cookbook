@@ -120,11 +120,23 @@ async function handleCreateStep(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const stepNumber = parseInt(formData.get('stepNumber'));
+    const description = formData.get('description').trim();
     const estimatedTimeMinutes = formData.get('estimatedTime');
     
+    if (!stepNumber || stepNumber <= 0) {
+        alert('Номер шага должен быть больше 0');
+        return;
+    }
+    
+    if (!description) {
+        alert('Описание шага не может быть пустым');
+        return;
+    }
+    
     const data = {
-        stepNumber: parseInt(formData.get('stepNumber')),
-        description: formData.get('description'),
+        stepNumber: stepNumber,
+        description: description,
         estimatedTime: estimatedTimeMinutes ? `PT${estimatedTimeMinutes}M` : null
     };
     
@@ -293,9 +305,22 @@ async function handleAddIngredient(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const name = formData.get('name').trim();
+    const amount = parseFloat(formData.get('amount'));
+    
+    if (!name) {
+        alert('Название ингредиента не может быть пустым');
+        return;
+    }
+    
+    if (!amount || amount <= 0) {
+        alert('Количество должно быть больше 0');
+        return;
+    }
+    
     const data = {
-        name: formData.get('name'),
-        amount: parseFloat(formData.get('amount')),
+        name: name,
+        amount: amount,
         unit: formData.get('unit'),
         isOptional: formData.get('isOptional') === 'on'
     };

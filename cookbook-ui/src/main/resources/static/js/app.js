@@ -66,9 +66,22 @@ async function handleCreateDish(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const name = formData.get('name').trim();
+    const description = formData.get('description').trim();
+    
+    if (!name) {
+        alert('Название блюда не может быть пустым');
+        return;
+    }
+    
+    if (!description) {
+        alert('Описание не может быть пустым');
+        return;
+    }
+    
     const data = {
-        name: formData.get('name'),
-        description: formData.get('description')
+        name: name,
+        description: description
     };
     
     try {

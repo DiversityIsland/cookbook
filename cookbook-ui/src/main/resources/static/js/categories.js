@@ -58,9 +58,17 @@ async function handleCreateCategory(event) {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const name = formData.get('name').trim();
+    const description = formData.get('description')?.trim() || null;
+    
+    if (!name) {
+        alert('Название категории не может быть пустым');
+        return;
+    }
+    
     const data = {
-        name: formData.get('name'),
-        description: formData.get('description') || null
+        name: name,
+        description: description
     };
     
     try {
